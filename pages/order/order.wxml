@@ -1,0 +1,133 @@
+<view class="page-container">
+  <!-- 搜索框 -->
+  <view class="search-container">
+    <view class="search-box" bindtap="onSearchTap">
+      <text class="search-icon">🔍</text>
+      <text class="search-placeholder">点击搜索菜品</text>
+    </view>
+  </view>
+  
+  <!-- 加载状态 -->
+  <view class="loading-container" wx:if="{{loading}}">
+    <view class="loading-spinner"></view>
+    <text class="loading-text">正在加载数据...</text>
+  </view>
+  
+  <!-- 错误提示 -->
+  <view class="error-container" wx:if="{{error && !loading}}">
+    <text class="error-icon">⚠️</text>
+    <text class="error-text">{{error}}</text>
+    <button class="retry-btn" bindtap="onRetry">重试</button>
+  </view>
+  
+  <!-- 左右分栏布局 -->
+  <view class="dining-layout" wx:if="{{!loading && !error}}">
+    <!-- 左边食堂列表 -->
+    <view class="canteen-list">
+      <view 
+        class="canteen-item {{currentCanteen === item.id ? 'active' : ''}}" 
+        wx:for="{{canteens}}" 
+        wx:key="id"
+        data-id="{{item.id}}"
+        bindtap="onCanteenChange"
+      >
+        <text class="canteen-name">{{item.name}}</text>
+      </view>
+    </view>
+    
+    <!-- 右边商家列表 -->
+    <view class="merchant-list">
+      <!-- 空状态提示 -->
+      <view class="empty-container" wx:if="{{currentMerchants.length === 0}}">
+        <text class="empty-icon">🍽️</text>
+        <text class="empty-text">该食堂暂无商家</text>
+      </view>
+      
+      <!-- 商家列表 -->
+      <view class="merchant-item" 
+        wx:for="{{currentMerchants}}" 
+        wx:key="id"
+        data-merchant="{{item}}"
+        bindtap="onMerchantTap"
+      >
+        <view class="merchant-header">
+          <image src="{{item.image ? (item.image + '?t=' + currentTimestamp) : ''}}" mode="aspectFill" class="merchant-image" />
+          <view class="merchant-info">
+            <text class="merchant-name">{{item.name}}</text>
+            <text class="merchant-desc">{{item.description}}</text>
+            <text class="merchant-hours">营业时间: {{item.hours}}</text>
+          </view>
+        </view>
+        
+        <!-- 菜品信息部分 -->
+        <view class="dishes-section" wx:if="{{item.dishes && item.dishes.length > 0}}">
+          <text class="dishes-title">推荐菜品</text>
+          <view class="dishes-list">
+            <view class="dish-item" wx:for="{{item.dishes}}" wx:key="id" wx:for-item="dish">
+              <image src="{{dish.image ? (dish.image + '?t=' + currentTimestamp) : ''}}" mode="aspectFill" class="dish-image" />
+              <text class="dish-name">{{dish.name}}</text>
+              <text class="dish-price">¥{{dish.price}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 购物车遮罩 -->
+  <view class="cart-mask" wx:if="{{showCart}}" bindtap="toggleCart"></view>
+
+  <!-- 购物车底部栏 -->
+  <view class="cart-bar">
+    <view class="cart-icon-wrapper" bindtap="toggleCart">
+      <view class="cart-icon">
+        <text>🛒</text>
+        <view class="cart-badge" wx:if="{{cartTotalQuantity > 0}}">
+          <text>{{cartTotalQuantity > 99 ? '99+' : cartTotalQuantity}}</text>
+        </view>
+      </view>
+    </view>
+    
+    <view class="cart-info">
+      <view class="cart-total">
+        <text class="cart-total-label">合计：</text>
+        <text class="cart-total-price">¥{{cartTotalPriceFormatted}}</text>
+      </view>
+      <view class="cart-checkout-btn" bindtap="onCheckout">去结算</view>
+    </view>
+  </view>
+
+  <!-- 购物车展开列表 -->
+  <view class="cart-list" wx:if="{{showCart}}">
+    <view class="cart-list-header">
+      <text class="cart-list-title">购物车</text>
+      <text class="cart-clear-btn" bindtap="clearCart">清空</text>
+    </view>
+    
+    <view class="cart-list-content">
+      <view class="cart-item" wx:for="{{cart}}" wx:key="id">
+        <image class="cart-item-image" src="{{item.image}}" mode="aspectFill" />
+        <view class="cart-item-info">
+          <text class="cart-item-name">{{item.name}}</text>
+          <view class="cart-item-spec" wx:if="{{item.specification}}">
+            <text>规格：{{item.specification}}</text>
+          </view>
+          <view class="cart-item-spiciness" wx:if="{{item.spiciness}}">
+            <text>辣度：{{item.spiciness}}</text>
+          </view>
+          <view class="cart-item-bottom">
+            <text class="cart-item-price">¥{{item.priceFormatted}}</text>
+            <view class="cart-item-quantity">
+              <view class="quantity-mini-btn" bindtap="decreaseCartItemQuantity" data-id="{{item.id}}">-</view>
+              <text class="quantity-mini-value">{{item.quantity}}</text>
+              <view class="quantity-mini-btn" bindtap="increaseCartItemQuantity" data-id="{{item.id}}">+</view>
+            </view>
+          </view>
+        </view>
+        <view class="cart-item-delete" bindtap="removeCartItem" data-id="{{item.id}}">
+          <text>×</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

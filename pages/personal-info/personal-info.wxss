@@ -1,0 +1,143 @@
+/* 页面容器 */
+.page-container {
+  background-color: #f5f5f5;
+  min-height: 100vh;
+  padding: 20rpx;
+}
+
+/* 区块样式 */
+.section {
+  background-color: #fff;
+  border-radius: 12rpx;
+  margin-bottom: 20rpx;
+  overflow: hidden;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.05);
+}
+
+/* 区块标题 */
+.section-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  padding: 20rpx 30rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+/* 信息项 */
+.info-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24rpx 30rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+/* 最后一个信息项不显示边框 */
+.info-item:last-child {
+  border-bottom: none;
+}
+
+/* 信息标签 */
+.info-label {
+  font-size: 28rpx;
+  color: #666;
+}
+
+/* 信息值 */
+.info-value {
+  display: flex;
+  align-items: center;
+  font-size: 28rpx;
+  color: #333;
+}
+
+/* 操作文本 */
+.action-text {
+  font-size: 26rpx;
+  color: #007bff;
+  margin-left: 20rpx;
+}
+
+/* 未绑定状态 */
+.info-value text:first-child {
+  color: #999;
+}
+
+/* 弹窗样式 */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: #fff;
+  border-radius: 12rpx;
+  width: 80%;
+  max-width: 600rpx;
+  overflow: hidden;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20rpx 30rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.modal-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.modal-close {
+  font-size: 40rpx;
+  color: #999;
+  cursor: pointer;
+}
+
+.modal-body {
+  padding: 30rpx;
+}
+
+.modal-input {
+  width: 100%;
+  padding: 20rpx;
+  border: 1rpx solid #e0e0e0;
+  border-radius: 8rpx;
+  font-size: 28rpx;
+  margin-bottom: 20rpx;
+}
+
+.modal-footer {
+  display: flex;
+  border-top: 1rpx solid #f0f0f0;
+}
+
+.modal-btn {
+  flex: 1;
+  padding: 20rpx;
+  font-size: 28rpx;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.modal-btn.cancel {
+  color: #666;
+  border-right: 1rpx solid #f0f0f0;
+}
+
+.modal-btn.confirm {
+  color: #007bff;
+  font-weight: bold;
+}

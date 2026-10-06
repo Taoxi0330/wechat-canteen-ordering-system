@@ -1,0 +1,69 @@
+/* 我的收藏页面样式 */
+
+.page-container {
+  background: var(--bg-color);
+  min-height: 100vh;
+}
+
+/* 页面标题 */
+.page-header {
+  background: #fff;
+  padding: 40rpx 30rpx;
+  border-bottom: 2rpx solid var(--border-color);
+  text-align: center;
+}
+
+.page-title {
+  font-size: 48rpx;
+  font-weight: bold;
+  color: var(--text-color);
+}
+
+/* 收藏列表 */
+.favorite-list {
+  padding: 20rpx;
+}
+
+.favorite-item {
+  background: #fff;
+  padding: 30rpx;
+  margin-bottom: 20rpx;
+  border-radius: 20rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.05);
+}
+
+.merchant-info {
+  flex: 1;
+}
+
+.merchant-name {
+  font-size: 40rpx;
+  font-weight: bold;
+  color: var(--text-color);
+  margin-bottom: 10rpx;
+}
+
+.merchant-desc {
+  font-size: 28rpx;
+  color: var(--text-color-light);
+}
+
+.favorite-icon {
+  font-size: 40rpx;
+  color: #ff4d4f;
+  margin-left: 20rpx;
+}
+
+/* 空状态 */
+.empty-state {
+  text-align: center;
+  padding: 100rpx 0;
+}
+
+.empty-text {
+  font-size: 32rpx;
+  color: var(--text-color-light);
+}

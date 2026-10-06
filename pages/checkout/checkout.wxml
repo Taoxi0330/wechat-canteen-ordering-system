@@ -1,0 +1,89 @@
+<view class="page-container">
+  <!-- 顶部选择 -->
+  <view class="order-type-section">
+    <view class="type-btn {{orderType === 'eatIn' ? 'active' : ''}}" bindtap="onTypeChange" data-type="eatIn">
+      <text class="type-icon">🍽️</text>
+      <text class="type-text">堂食</text>
+    </view>
+    <view class="type-btn {{orderType === 'takeaway' ? 'active' : ''}}" bindtap="onTypeChange" data-type="takeaway">
+      <text class="type-icon">🚪</text>
+      <text class="type-text">外卖</text>
+    </view>
+  </view>
+  
+  <!-- 地址选择（仅外卖显示） -->
+  <view class="address-section" wx:if="{{orderType === 'takeaway'}}">
+    <view class="section-title">配送地址</view>
+    <view class="address-card" bindtap="onSelectAddress">
+      <view class="address-content" wx:if="{{selectedAddress}}">
+        <view class="address-header">
+          <text class="name">{{selectedAddress.name}}</text>
+          <text class="phone">{{selectedAddress.phone}}</text>
+          <view class="default-tag" wx:if="{{selectedAddress.is_default == 1}}">
+            <text>默认</text>
+          </view>
+        </view>
+        <text class="address-detail">{{selectedAddress.address}}</text>
+      </view>
+      <view class="address-placeholder" wx:else>
+        <text class="placeholder-icon">📍</text>
+        <text class="placeholder-text">请选择配送地址</text>
+      </view>
+      <view class="arrow">›</view>
+    </view>
+  </view>
+  
+  <!-- 菜品列表 -->
+  <view class="dishes-section">
+    <view class="section-title">订单详情</view>
+    <view class="dish-list">
+      <view class="dish-item" wx:for="{{cartItems}}" wx:key="id">
+        <image class="dish-image" src="{{item.image || '/images/banner1.png'}}" mode="aspectFill" />
+        <view class="dish-info">
+          <text class="dish-name">{{item.name}}</text>
+          <text class="dish-spec" wx:if="{{item.specification}}">规格：{{item.specification}}</text>
+          <text class="dish-spiciness" wx:if="{{item.spiciness}}">辣度：{{item.spiciness}}</text>
+          <text class="dish-price">¥{{item.priceFormatted}} × {{item.quantity}}</text>
+        </view>
+        <text class="dish-subtotal">¥{{item.subtotalFormatted}}</text>
+      </view>
+    </view>
+  </view>
+  
+  <!-- 预约时间 -->
+  <view class="reservation-section">
+    <view class="section-title">预约时间</view>
+    <view class="reservation-card" bindtap="onSelectReservationTime">
+      <view class="reservation-content" wx:if="{{reservationTime}}">
+        <text class="reservation-time">{{reservationTime}}</text>
+      </view>
+      <view class="reservation-placeholder" wx:else>
+        <text class="placeholder-icon">⏰</text>
+        <text class="placeholder-text">请选择{{orderType === 'eatIn' ? '取餐' : '送达'}}时间</text>
+      </view>
+      <text class="arrow">›</text>
+    </view>
+  </view>
+  
+  <!-- 备注 -->
+  <view class="remark-section">
+    <view class="section-title">备注</view>
+    <input 
+      class="remark-input" 
+      placeholder="请输入备注信息（选填）" 
+      value="{{remark}}"
+      bindinput="onRemarkInput"
+    />
+  </view>
+  
+  <!-- 底部结算栏 -->
+  <view class="checkout-footer {{pageReady ? 'ready' : ''}}">
+    <view class="total-info">
+      <text class="total-label">共 {{totalQuantity}} 件商品</text>
+      <text class="total-price">合计：<span class="price-highlight">¥{{totalPriceFormatted}}</span></text>
+    </view>
+    <view class="pay-btn" bindtap="onPay">
+      <text>立即支付</text>
+    </view>
+  </view>
+</view>

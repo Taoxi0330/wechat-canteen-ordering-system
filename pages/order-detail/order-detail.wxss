@@ -1,0 +1,137 @@
+.page-container {
+  background: #f5f5f5;
+  min-height: 100vh;
+  padding-bottom: 40rpx;
+}
+
+.loading-container,
+.empty-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.loading-text,
+.empty-text {
+  color: #999;
+  font-size: 28rpx;
+}
+
+.order-detail {
+  padding: 0;
+}
+
+.order-status-section {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 60rpx 40rpx;
+  text-align: center;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 16rpx 48rpx;
+  border-radius: 40rpx;
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.pickup-card {
+  background: #fff;
+  margin: -40rpx 30rpx 30rpx;
+  border-radius: 24rpx;
+  padding: 50rpx 40rpx;
+  text-align: center;
+  box-shadow: 0 8rpx 24rpx rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 10;
+}
+
+.pickup-title {
+  font-size: 28rpx;
+  color: #666;
+  margin-bottom: 20rpx;
+}
+
+.pickup-code {
+  font-size: 80rpx;
+  font-weight: bold;
+  color: #667eea;
+  letter-spacing: 12rpx;
+  margin-bottom: 20rpx;
+}
+
+.pickup-tip {
+  font-size: 24rpx;
+  color: #999;
+}
+
+.info-section {
+  background: #fff;
+  margin: 0 30rpx 30rpx;
+  border-radius: 16rpx;
+  padding: 30rpx;
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 30rpx;
+  padding-bottom: 20rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.info-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20rpx 0;
+}
+
+.info-label {
+  font-size: 28rpx;
+  color: #666;
+}
+
+.info-value {
+  font-size: 28rpx;
+  color: #333;
+  text-align: right;
+}
+
+.remark-content {
+  font-size: 28rpx;
+  color: #666;
+  text-align: right;
+  line-height: 1.4;
+  white-space: pre-wrap;
+  word-break: break-all;
+  max-width: 60%;
+}
+
+.price-section {
+  background: #fff;
+  margin: 0 30rpx;
+  border-radius: 16rpx;
+  padding: 30rpx;
+}
+
+.price-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.price-label {
+  font-size: 28rpx;
+  color: #666;
+}
+
+.price-value {
+  font-size: 40rpx;
+  font-weight: bold;
+  color: #ff6b35;
+}

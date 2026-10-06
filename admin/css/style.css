@@ -1,0 +1,857 @@
+/* 全局样式 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Microsoft YaHei', Arial, sans-serif;
+    background-color: #f5f5f5;
+    color: #333;
+    line-height: 1.6;
+}
+
+.container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 通用样式 */
+.section {
+    padding: 20px;
+}
+
+.btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #0069d9;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    color: white;
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+}
+
+.btn-sm {
+    padding: 4px 8px;
+    font-size: 12px;
+    margin-right: 4px;
+}
+
+/* 登录界面 */
+#login-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    background-color: #f5f5f5;
+}
+
+.login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+#login-section h1 {
+    margin-bottom: 40px;
+    color: #007bff;
+}
+
+.login-form {
+    background-color: white;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    position: relative;
+    z-index: 1000;
+    margin: 0 auto;
+    text-align: left;
+}
+
+/* 标签切换 */
+.auth-tabs {
+    display: flex;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #ddd;
+}
+
+.auth-tab {
+    flex: 1;
+    padding: 10px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    color: #666;
+    transition: all 0.3s ease;
+}
+
+.auth-tab.active {
+    color: #007bff;
+    border-bottom: 2px solid #007bff;
+    font-weight: bold;
+}
+
+.auth-tab:hover {
+    color: #007bff;
+}
+
+/* 表单 */
+.auth-form {
+    margin-top: 20px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+#login-btn {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+}
+
+/* 主界面 */
+.header {
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.nav {
+    background-color: #007bff;
+    color: white;
+}
+
+.nav ul {
+    display: flex;
+    list-style: none;
+}
+
+.nav-item {
+    color: white;
+    text-decoration: none;
+    padding: 16px 24px;
+    display: block;
+    transition: all 0.3s ease;
+}
+
+.nav-item:hover,
+.nav-item.active {
+    background-color: #0069d9;
+}
+
+.content {
+    flex: 1;
+    padding: 20px;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.section-header h2 {
+    color: #333;
+}
+
+.dish-actions {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.filter-section {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.filter-section label {
+    font-weight: bold;
+}
+
+.filter-section select {
+    padding: 8px 16px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+#dish-merchant-select {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+/* 表格样式 */
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.data-table th,
+.data-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.data-table th {
+    background-color: #f8f9fa;
+    font-weight: bold;
+}
+
+.data-table tr:hover {
+    background-color: #f8f9fa;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+/* 模态框 */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+    align-items: center;
+    justify-content: center;
+}
+
+.modal.show {
+    display: flex;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 0;
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    width: 500px;
+    max-width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.modal-header {
+    padding: 20px;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header h3 {
+    margin: 0;
+}
+
+.close {
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #999;
+}
+
+.close:hover {
+    color: #333;
+}
+
+.modal-body {
+    padding: 20px;
+}
+
+.modal-footer {
+    padding: 20px;
+    border-top: 1px solid #ddd;
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+}
+
+/* 提示框 */
+.toast {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 16px;
+    border-radius: 4px;
+    color: white;
+    font-size: 14px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    z-index: 2000;
+    animation: slideIn 0.3s ease;
+}
+
+.toast.success {
+    background-color: #28a745;
+}
+
+.toast.error {
+    background-color: #dc3545;
+}
+
+.toast.info {
+    background-color: #17a2b8;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .login-form {
+        width: 100%;
+        padding: 20px;
+    }
+
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .nav ul {
+        flex-direction: column;
+    }
+
+    .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .dish-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .action-buttons {
+        flex-direction: column;
+    }
+
+    .action-buttons .btn {
+        width: 100%;
+    }
+}
+
+/* 图片输入包装器 */
+.image-input-wrapper {
+    display: flex;
+    gap: 12px;
+}
+
+.image-input-wrapper input {
+    flex: 1;
+}
+
+/* 图片预览 */
+.image-preview {
+    margin-top: 12px;
+}
+
+.image-preview img {
+    max-width: 100%;
+    max-height: 150px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+}
+
+/* 图片选择器样式 */
+.large-modal .modal-content {
+    width: 800px;
+}
+
+.image-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 16px;
+    max-height: 500px;
+}
+
+/* 订单状态样式 */
+.status-pending {
+    color: #e6a23c;
+    font-weight: bold;
+}
+
+.status-processing {
+    color: #409eff;
+    font-weight: bold;
+}
+
+.status-completed {
+    color: #67c23a;
+    font-weight: bold;
+}
+
+.status-cancelled {
+    background-color: #dc3545;
+    color: white;
+}
+
+.btn-success {
+    background-color: #67c23a;
+    color: white;
+}
+
+.btn-success:hover {
+    background-color: #5daf34;
+}
+
+.image-item {
+    cursor: pointer;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    padding: 8px;
+    transition: all 0.3s ease;
+    background-color: #f8f9fa;
+}
+
+.image-item:hover {
+    border-color: #007bff;
+    background-color: #e9ecef;
+}
+
+.image-item.selected {
+    border-color: #007bff;
+    background-color: #e3f2fd;
+}
+
+.image-item img {
+    width: 100%;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.image-item .image-name {
+    margin-top: 8px;
+    font-size: 12px;
+    color: #666;
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* 上传区域 */
+.upload-section {
+    margin-bottom: 24px;
+}
+
+.upload-area {
+    border: 2px dashed #ddd;
+    border-radius: 8px;
+    padding: 40px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background-color: #f8f9fa;
+}
+
+.upload-area:hover {
+    border-color: #007bff;
+    background-color: #e9ecef;
+}
+
+.upload-area.dragover {
+    border-color: #007bff;
+    background-color: #e3f2fd;
+}
+
+.upload-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+}
+
+.upload-text {
+    font-size: 16px;
+    color: #666;
+}
+
+.image-grid-section h4 {
+  margin-bottom: 16px;
+  color: #333;
+  font-size: 16px;
+}
+
+/* 规格价格区域 */
+.spec-price-item {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 12px;
+  align-items: center;
+}
+
+.spec-price-item input[type="text"] {
+  flex: 1;
+}
+
+.spec-price-item input[type="number"] {
+  width: 150px;
+}
+
+.spec-price-item .btn-remove {
+  background: #dc3545;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* 营养信息输入区域 */
+.nutrition-container {
+  background: #f8f9fa;
+  padding: 16px;
+  border-radius: 8px;
+}
+
+.nutrition-input-row {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.nutrition-input-row:last-child {
+  margin-bottom: 0;
+}
+
+.nutrition-input {
+  flex: 1;
+}
+
+.nutrition-input label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 12px;
+  color: #666;
+}
+
+.nutrition-input input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+/* 订单详情样式 */
+.btn-info {
+    background-color: #17a2b8;
+    color: white;
+}
+
+.btn-info:hover {
+    background-color: #138496;
+}
+
+.order-detail-section {
+    margin-bottom: 24px;
+}
+
+.order-detail-section h4 {
+    margin-bottom: 12px;
+    color: #333;
+    font-size: 16px;
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 8px;
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 8px 24px;
+    border-radius: 20px;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+}
+
+.status-badge.pending {
+    background-color: #e6a23c;
+}
+
+.status-badge.processing {
+    background-color: #409eff;
+}
+
+.status-badge.completed {
+    background-color: #67c23a;
+}
+
+.status-badge.cancelled {
+    background-color: #dc3545;
+}
+
+.pickup-card {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 30px;
+    border-radius: 12px;
+    text-align: center;
+    color: white;
+    margin-bottom: 24px;
+}
+
+.pickup-title {
+    font-size: 18px;
+    margin-bottom: 12px;
+    opacity: 0.9;
+}
+
+.pickup-code {
+    font-size: 48px;
+    font-weight: bold;
+    letter-spacing: 8px;
+    margin-bottom: 12px;
+}
+
+.pickup-tip {
+    font-size: 14px;
+    opacity: 0.8;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+}
+
+.info-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.info-label {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 4px;
+}
+
+.info-value {
+    font-size: 16px;
+    font-weight: 500;
+    color: #333;
+}
+
+.order-items {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 16px;
+}
+
+.order-item {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    background-color: white;
+    border-radius: 8px;
+    margin-bottom: 12px;
+}
+
+.order-item:last-child {
+    margin-bottom: 0;
+}
+
+.item-image {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-right: 12px;
+}
+
+.item-info {
+    flex: 1;
+}
+
+.item-name {
+    font-size: 16px;
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 4px;
+}
+
+.item-quantity {
+    font-size: 14px;
+    color: #666;
+}
+
+.item-price {
+    font-size: 18px;
+    font-weight: bold;
+    color: #e6a23c;
+}
+
+.price-section {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.price-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.price-label {
+    font-size: 16px;
+    color: #333;
+}
+
+.price-value {
+    font-size: 24px;
+    font-weight: bold;
+    color: #e6a23c;
+}
+
+/* 订单分析页面样式 */
+.analytics-filters {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.analytics-filters select {
+    padding: 8px 16px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.analytics-dashboard {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+}
+
+.chart-container {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+.chart-container h3 {
+    margin-bottom: 16px;
+    color: #333;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.chart {
+    width: 100%;
+    height: 300px;
+}
+
+/* 响应式设计 - 订单分析 */
+@media (max-width: 768px) {
+    .analytics-filters {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .analytics-dashboard {
+        grid-template-columns: 1fr;
+    }
+    
+    .chart {
+        height: 250px;
+    }
+}

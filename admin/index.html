@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>食堂商家管理系统</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- 登录界面 -->
+        <div id="login-section" class="section">
+            <div class="login-container">
+                <h1>食堂商家管理系统</h1>
+                
+                <!-- 标签切换 -->
+                <div class="auth-tabs">
+                    <button class="auth-tab active" data-tab="login">登录</button>
+                    <button class="auth-tab" data-tab="register">注册</button>
+                </div>
+                
+                <!-- 登录表单 -->
+                <div id="login-form" class="auth-form">
+                    <div class="form-group">
+                        <label for="login-username">用户名</label>
+                        <input type="text" id="login-username" placeholder="请输入用户名" value="admin">
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">密码</label>
+                        <input type="password" id="login-password" placeholder="请输入密码" value="123456">
+                    </div>
+                    <button id="login-btn" class="btn btn-primary">登录</button>
+                </div>
+                
+                <!-- 注册表单 -->
+                <div id="register-form" class="auth-form" style="display: none;">
+                    <div class="form-group">
+                        <label for="register-username">用户名</label>
+                        <input type="text" id="register-username" placeholder="请输入用户名">
+                    </div>
+                    <div class="form-group">
+                        <label for="register-password">密码</label>
+                        <input type="password" id="register-password" placeholder="请输入密码">
+                    </div>
+                    <div class="form-group">
+                        <label for="register-phone">手机号</label>
+                        <input type="tel" id="register-phone" placeholder="请输入手机号">
+                    </div>
+                    <button id="register-btn" class="btn btn-primary">注册</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 主界面 -->
+        <div id="main-section" class="section" style="display: none;">
+            <header class="header">
+                <h1>食堂商家管理系统</h1>
+                <div class="user-info">
+                    <span>欢迎，管理员</span>
+                    <button id="logout-btn" class="btn btn-secondary">退出登录</button>
+                </div>
+            </header>
+
+            <nav class="nav">
+                <ul>
+                    <li><a href="#" class="nav-item active" data-section="merchants">商家管理</a></li>
+                    <li><a href="#" class="nav-item" data-section="dishes">菜品管理</a></li>
+                    <li><a href="#" class="nav-item" data-section="orders">订单管理</a></li>
+                    <li><a href="#" class="nav-item" data-section="analytics">订单分析</a></li>
+                    <li><a href="#" class="nav-item" data-section="reviews">评价管理</a></li>
+                    <li><a href="#" class="nav-item" data-section="users">用户管理</a></li>
+                </ul>
+            </nav>
+
+            <main class="content">
+                <!-- 商家管理 -->
+                <div id="merchants-section" class="content-section">
+                    <div class="section-header">
+                        <h2>商家管理</h2>
+                        <button id="add-merchant-btn" class="btn btn-primary">添加商家</button>
+                    </div>
+                    <div class="filter-section">
+                        <label for="merchant-canteen-filter">按食堂筛选：</label>
+                        <select id="merchant-canteen-filter">
+                            <option value="">全部食堂</option>
+                        </select>
+                    </div>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>所属食堂</th>
+                                <th>名称</th>
+                                <th>描述</th>
+                                <th>营业时间</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="merchants-list">
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- 菜品管理 -->
+                <div id="dishes-section" class="content-section" style="display: none;">
+                    <div class="section-header">
+                        <h2>菜品管理</h2>
+                        <div class="dish-actions">
+                            <select id="dish-merchant-select">
+                                <option value="">选择商家</option>
+                            </select>
+                            <button id="add-dish-btn" class="btn btn-primary">添加菜品</button>
+                        </div>
+                    </div>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>名称</th>
+                                <th>描述</th>
+                                <th>价格</th>
+                                <th>分类</th>
+                                <th>辣度</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="dishes-list">
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- 订单管理 -->
+                <div id="orders-section" class="content-section" style="display: none;">
+                    <div class="section-header">
+                        <h2>订单管理</h2>
+                    </div>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>用户ID</th>
+                                <th>商家ID</th>
+                                <th>订单类型</th>
+                                <th>总金额</th>
+                                <th>取餐码</th>
+                                <th>状态</th>
+                                <th>创建时间</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="orders-list">
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- 评价管理 -->
+                <div id="reviews-section" class="content-section" style="display: none;">
+                    <div class="section-header">
+                        <h2>评价管理</h2>
+                    </div>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>用户</th>
+                                <th>商家</th>
+                                <th>菜品</th>
+                                <th>评分</th>
+                                <th>评价内容</th>
+                                <th>商家回复</th>
+                                <th>创建时间</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="reviews-list">
+                        </tbody>
+                    </table>
+                </div>
+                
+                <!-- 订单分析 -->
+                <div id="analytics-section" class="content-section" style="display: none;">
+                    <div class="section-header">
+                        <h2>订单分析</h2>
+                        <div class="analytics-filters">
+                            <select id="analytics-time-filter">
+                                <option value="day">日统计</option>
+                                <option value="week">周统计</option>
+                                <option value="month">月统计</option>
+                            </select>
+                            <select id="analytics-merchant-filter">
+                                <option value="">所有商家</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="analytics-dashboard">
+                        <div class="chart-container">
+                            <h3>菜品销量统计</h3>
+                            <div id="dish-sales-chart" class="chart"></div>
+                        </div>
+                        <div class="chart-container">
+                            <h3>订单完成量统计</h3>
+                            <div id="order-completion-chart" class="chart"></div>
+                        </div>
+                        <div class="chart-container">
+                            <h3>商家订单量对比</h3>
+                            <div id="merchant-orders-chart" class="chart"></div>
+                        </div>
+                        <div class="chart-container">
+                            <h3>订单类型分布</h3>
+                            <div id="order-type-chart" class="chart"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 用户管理 -->
+                <div id="users-section" class="content-section" style="display: none;">
+                    <div class="section-header">
+                        <h2>用户管理 <span style="font-size: 14px; color: #666; font-weight: normal;" id="user-refresh-status"）</span></h2>
+                        <div class="search-section">
+                            <input type="text" id="user-search" placeholder="搜索电话号码..." class="search-input">
+                            <button id="user-search-btn" class="btn btn-secondary">搜索</button>
+                        </div>
+                    </div>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>用户名</th>
+                                <th>头像</th>
+                                <th>电话</th>
+                                <th>创建时间</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="users-list">
+                        </tbody>
+                    </table>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- 添加/编辑商家模态框 -->
+    <div id="merchant-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="merchant-modal-title">添加商家</h3>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="merchant-form">
+                    <input type="hidden" id="merchant-id">
+                    <div class="form-group">
+                        <label for="merchant-canteen">所属食堂 *</label>
+                        <select id="merchant-canteen">
+                            <option value="">请选择食堂</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="merchant-name">名称 *</label>
+                        <input type="text" id="merchant-name" placeholder="请输入商家名称">
+                    </div>
+                    <div class="form-group">
+                        <label for="merchant-description">描述</label>
+                        <textarea id="merchant-description" placeholder="请输入商家描述"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="merchant-hours">营业时间</label>
+                        <input type="text" id="merchant-hours" placeholder="请输入营业时间">
+                    </div>
+                    <div class="form-group">
+                        <label for="merchant-image">图片</label>
+                        <div class="image-input-wrapper">
+                            <input type="text" id="merchant-image" placeholder="请输入或选择图片路径">
+                            <button type="button" class="btn btn-secondary" id="select-merchant-image-btn">选择图片</button>
+                        </div>
+                        <div class="image-preview" id="merchant-image-preview"></div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button id="merchant-save-btn" class="btn btn-primary">保存</button>
+                <button id="merchant-cancel-btn" class="btn btn-secondary">取消</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 添加/编辑菜品模态框 -->
+    <div id="dish-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="dish-modal-title">添加菜品</h3>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="dish-form">
+                    <input type="hidden" id="dish-id">
+                    <div class="form-group">
+                        <label for="dish-name">名称</label>
+                        <input type="text" id="dish-name" placeholder="请输入菜品名称">
+                    </div>
+                    <div class="form-group">
+                        <label for="dish-description">描述</label>
+                        <textarea id="dish-description" placeholder="请输入菜品描述"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="dish-price">价格</label>
+                        <input type="number" id="dish-price" placeholder="请输入菜品价格" step="0.01">
+                    </div>
+                    <div class="form-group">
+                        <label for="dish-category">分类</label>
+                        <input type="text" id="dish-category" placeholder="请输入菜品分类">
+                    </div>
+                    <div class="form-group">
+                        <label for="dish-spiciness">辣度</label>
+                        <select id="dish-spiciness">
+                            <option value="不辣">不辣</option>
+                            <option value="微辣">微辣</option>
+                            <option value="中辣">中辣</option>
+                            <option value="特辣">特辣</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>规格价格设置（可选）</label>
+                        <div class="spec-prices-container" id="spec-prices-container">
+                            <button type="button" class="btn btn-secondary" id="add-spec-price-btn" style="margin-bottom: 10px;">添加规格</button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="dish-image">图片</label>
+                        <div class="image-input-wrapper">
+                            <input type="text" id="dish-image" placeholder="请输入或选择图片路径">
+                            <button type="button" class="btn btn-secondary" id="select-dish-image-btn">选择图片</button>
+                        </div>
+                        <div class="image-preview" id="dish-image-preview"></div>
+                    </div>
+                    <div class="form-group">
+                        <label>营养信息（可选）</label>
+                        <div class="nutrition-container">
+                            <div class="nutrition-input-row">
+                                <div class="nutrition-input">
+                                    <label>蛋白质 (g)</label>
+                                    <input type="number" id="nutrition-protein" placeholder="蛋白质" step="0.1">
+                                </div>
+                                <div class="nutrition-input">
+                                    <label>碳水化合物 (g)</label>
+                                    <input type="number" id="nutrition-carbs" placeholder="碳水化合物" step="0.1">
+                                </div>
+                                <div class="nutrition-input">
+                                    <label>脂肪 (g)</label>
+                                    <input type="number" id="nutrition-fat" placeholder="脂肪" step="0.1">
+                                </div>
+                            </div>
+                            <div class="nutrition-input-row">
+                                <div class="nutrition-input">
+                                    <label>维生素A (μg)</label>
+                                    <input type="number" id="nutrition-vitaminA" placeholder="维生素A" step="0.1">
+                                </div>
+                                <div class="nutrition-input">
+                                    <label>维生素C (mg)</label>
+                                    <input type="number" id="nutrition-vitaminC" placeholder="维生素C" step="0.1">
+                                </div>
+                                <div class="nutrition-input">
+                                    <label>钙 (mg)</label>
+                                    <input type="number" id="nutrition-calcium" placeholder="钙" step="0.1">
+                                </div>
+                            </div>
+                            <div class="nutrition-input-row">
+                                <div class="nutrition-input">
+                                    <label>铁 (mg)</label>
+                                    <input type="number" id="nutrition-iron" placeholder="铁" step="0.1">
+                                </div>
+                                <div class="nutrition-input">
+                                    <label>膳食纤维 (g)</label>
+                                    <input type="number" id="nutrition-fiber" placeholder="膳食纤维" step="0.1">
+                                </div>
+                                <div class="nutrition-input">
+                                    <label>热量 (kcal)</label>
+                                    <input type="number" id="nutrition-calories" placeholder="热量" step="0.1">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button id="dish-save-btn" class="btn btn-primary">保存</button>
+                <button id="dish-cancel-btn" class="btn btn-secondary">取消</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 订单详情模态框 -->
+    <div id="order-detail-modal" class="modal">
+        <div class="modal-content large-modal">
+            <div class="modal-header">
+                <h3>订单详情</h3>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body" id="order-detail-content">
+            </div>
+            <div class="modal-footer">
+                <button id="order-detail-close-btn" class="btn btn-secondary">关闭</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 回复评价模态框 -->
+    <div id="reply-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>回复评价</h3>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="reply-form">
+                    <input type="hidden" id="reply-review-id">
+                    <div class="form-group">
+                        <label>评价内容</label>
+                        <p id="reply-review-content" style="background: #f5f5f5; padding: 15px; border-radius: 8px; margin: 0;"></p>
+                    </div>
+                    <div class="form-group">
+                        <label for="reply-content">回复内容</label>
+                        <textarea id="reply-content" placeholder="请输入回复内容" style="height: 120px;"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button id="reply-save-btn" class="btn btn-primary">保存</button>
+                <button id="reply-cancel-btn" class="btn btn-secondary">取消</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 编辑用户模态框 -->
+    <div id="user-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="user-modal-title">编辑用户</h3>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="user-form">
+                    <input type="hidden" id="user-id">
+                    <div class="form-group">
+                        <label for="user-username">用户名</label>
+                        <input type="text" id="user-username" placeholder="请输入用户名">
+                    </div>
+                    <div class="form-group">
+                        <label for="user-phone">电话</label>
+                        <input type="tel" id="user-phone" placeholder="请输入电话">
+                    </div>
+                    <div class="form-group">
+                        <label for="user-avatar">头像</label>
+                        <input type="text" id="user-avatar" placeholder="头像URL">
+                    </div>
+                    <div class="form-group">
+                        <label for="user-password">密码</label>
+                        <input type="password" id="user-password" placeholder="留空表示不修改">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button id="user-save-btn" class="btn btn-primary">保存</button>
+                <button id="user-cancel-btn" class="btn btn-secondary">取消</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 提示框 -->
+    <div id="toast" class="toast" style="display: none;"></div>
+
+    <!-- 图片选择器模态框 -->
+    <div id="image-selector-modal" class="modal">
+        <div class="modal-content large-modal">
+            <div class="modal-header">
+                <h3>选择或上传图片</h3>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="upload-section">
+                    <div class="upload-area" id="upload-area">
+                        <div class="upload-icon">📤</div>
+                        <div class="upload-text">点击或拖拽图片到这里上传</div>
+                        <input type="file" id="file-input" accept="image/*" style="display: none;">
+                    </div>
+                </div>
+                <div class="image-grid-section">
+                    <h4>已有图片</h4>
+                    <div class="image-grid" id="image-grid">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="image-selector-cancel-btn" class="btn btn-secondary">取消</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

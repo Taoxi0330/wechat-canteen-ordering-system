@@ -1,0 +1,420 @@
+<view class="page-container">
+  <!-- 商家信息头部 -->
+  <view class="merchant-header">
+    <image class="merchant-header-image" src="{{merchant.image ? (merchant.image + '?t=' + currentTimestamp) : ''}}" mode="aspectFill" wx:if="{{merchant.image}}"></image>
+    <view class="merchant-info">
+      <view class="merchant-name-container">
+        <view class="favorite-btn" bindtap="onFavoriteTap">
+          <text class="favorite-icon {{isFavorite ? 'filled' : ''}}">♥</text>
+        </view>
+        <text class="merchant-name">{{merchant.name}}</text>
+      </view>
+    </view>
+  </view>
+  
+  <!-- 点餐和评价切换 -->
+  <view class="tab-container">
+    <view 
+      class="tab-item {{activeTab === 'order' ? 'active' : ''}}"
+      data-tab="order"
+      bindtap="onTabChange"
+    >
+      <text class="tab-text">点餐</text>
+    </view>
+    <view 
+      class="tab-item {{activeTab === 'comment' ? 'active' : ''}}"
+      data-tab="comment"
+      bindtap="onTabChange"
+    >
+      <text class="tab-text">评价</text>
+    </view>
+  </view>
+  
+  <!-- 点餐内容 -->
+  <view class="tab-content" wx:if="{{activeTab === 'order'}}">
+    <view class="order-layout">
+      <!-- 左侧菜品分类列表 -->
+      <view class="category-list">
+        <view 
+          class="category-item {{activeCategory === item.id ? 'active' : ''}}"
+          wx:for="{{categories}}"
+          wx:key="id"
+          data-id="{{item.id}}"
+          bindtap="onCategoryChange"
+        >
+          <text class="category-name">{{item.name}}</text>
+        </view>
+      </view>
+      
+      <!-- 右侧菜品列表 -->
+      <view class="dish-list">
+        <view class="dish-item" wx:for="{{dishes}}" wx:key="id" bindtap="onDishClick" data-dish="{{item}}">
+          <image class="dish-image" src="{{item.image ? (item.image + '?t=' + currentTimestamp) : ''}}" mode="aspectFill" wx:if="{{item.image}}"></image>
+          <view class="dish-content">
+            <text class="dish-name">{{item.name}}</text>
+            <text class="dish-description" wx:if="{{item.description}}">{{item.description}}</text>
+            <view class="dish-meta">
+              <text class="dish-spiciness" wx:if="{{item.spiciness && item.spiciness !== '不辣'}}">{{item.spiciness}}</text>
+              <text class="dish-price">¥{{item.priceFormatted}}</text>
+            </view>
+          </view>
+        </view>
+        <view class="empty-state" wx:if="{{dishes.length === 0}}">
+          <text>暂无菜品</text>
+        </view>
+      </view>
+    </view>
+  </view>
+  
+  <!-- 评价内容 -->
+  <view class="tab-content" wx:if="{{activeTab === 'comment'}}">
+    <view class="reviews-container">
+      <view class="reviews-summary" wx:if="{{reviews.length > 0}}">
+        <view class="summary-item">
+          <text class="summary-label">平均评分</text>
+          <text class="summary-value">{{averageRating}}</text>
+        </view>
+        <view class="summary-item">
+          <text class="summary-label">评价数量</text>
+          <text class="summary-value">{{reviews.length}}</text>
+        </view>
+      </view>
+      
+      <view class="reviews-list">
+        <view class="review-item" wx:for="{{reviews}}" wx:key="id">
+          <view class="review-header">
+            <view class="user-info">
+              <text class="user-avatar">{{item.userAvatar || 'U'}}</text>
+              <text class="user-name">{{item.username || '匿名用户'}}</text>
+            </view>
+            <view class="review-rating">
+              <view class="stars">
+                <view 
+                  wx:for="{{[1,2,3,4,5]}}" 
+                  wx:key="*this" 
+                  wx:for-item="starIndex"
+                  class="star {{starIndex <= item.rating ? 'active' : ''}}"
+                >★</view>
+              </view>
+            </view>
+          </view>
+          
+          <view class="review-dish" wx:if="{{item.dish_name}}">
+            <text class="dish-tag">「{{item.dish_name}}」</text>
+          </view>
+          
+          <view class="review-content" wx:if="{{item.content}}">
+            <text>{{item.content}}</text>
+          </view>
+          
+          <view class="review-reply" wx:if="{{item.reply}}">
+            <view class="reply-label">商家回复：</view>
+            <view class="reply-content">{{item.reply}}</view>
+            <view class="reply-time" wx:if="{{item.reply_at}}">{{item.reply_at}}</view>
+          </view>
+          
+          <view class="review-time">
+            <text>{{item.created_at}}</text>
+          </view>
+        </view>
+      </view>
+      
+      <view class="empty-state" wx:if="{{reviews.length === 0}}">
+        <text class="empty-icon">📝</text>
+        <text class="empty-text">暂无评价</text>
+      </view>
+    </view>
+  </view>
+  
+  <!-- 菜品详情弹窗 -->
+  <view class="dish-modal-mask" wx:if="{{showDishModal}}" bindtap="closeDishModal"></view>
+  <view class="dish-modal" wx:if="{{showDishModal}}">
+    <view class="dish-modal-content">
+      <!-- 关闭按钮 -->
+      <view class="dish-modal-close" bindtap="closeDishModal">
+        <text>×</text>
+      </view>
+      
+      <!-- 菜品图片 -->
+      <image class="dish-modal-image" src="{{selectedDish.image ? (selectedDish.image + '?t=' + currentTimestamp) : ''}}" mode="aspectFill" wx:if="{{selectedDish && selectedDish.image}}"></image>
+      
+      <!-- 菜品信息 -->
+      <view class="dish-modal-info">
+        <view class="dish-modal-name">{{selectedDish && selectedDish.name}}</view>
+        <view class="dish-modal-price">¥{{currentPriceFormatted}}</view>
+        <view class="dish-modal-desc" wx:if="{{selectedDish && selectedDish.description}}">
+          {{selectedDish.description}}
+        </view>
+      </view>
+      
+      <!-- 营养信息按钮 -->
+      <view class="dish-modal-section" wx:if="{{hasNutrition}}">
+        <view class="nutrition-btn" bindtap="openNutritionModal">
+          <text class="nutrition-btn-icon">📊</text>
+          <text class="nutrition-btn-text">查看营养成分</text>
+        </view>
+      </view>
+      
+      <!-- 规格选择 -->
+      <view class="dish-modal-section" wx:if="{{specificationsList.length > 0}}">
+        <view class="dish-modal-section-title">规格</view>
+        <view class="dish-modal-options">
+          <view 
+            class="dish-modal-option {{selectedSpecification === item ? 'active' : ''}}" 
+            wx:for="{{specificationsList}}" 
+            wx:key="*this"
+            bindtap="onSpecificationChange"
+            data-value="{{item}}"
+          >
+            {{item}}
+          </view>
+        </view>
+      </view>
+      
+      <!-- 辣度选择 -->
+      <view class="dish-modal-section">
+        <view class="dish-modal-section-title">辣度</view>
+        <view class="dish-modal-options">
+          <view 
+            class="dish-modal-option {{selectedSpiciness === '不辣' ? 'active' : ''}}" 
+            bindtap="onSpicinessChange"
+            data-value="不辣"
+          >
+            不辣
+          </view>
+          <view 
+            class="dish-modal-option {{selectedSpiciness === '微辣' ? 'active' : ''}}" 
+            bindtap="onSpicinessChange"
+            data-value="微辣"
+          >
+            微辣
+          </view>
+          <view 
+            class="dish-modal-option {{selectedSpiciness === '中辣' ? 'active' : ''}}" 
+            bindtap="onSpicinessChange"
+            data-value="中辣"
+          >
+            中辣
+          </view>
+          <view 
+            class="dish-modal-option {{selectedSpiciness === '特辣' ? 'active' : ''}}" 
+            bindtap="onSpicinessChange"
+            data-value="特辣"
+          >
+            特辣
+          </view>
+        </view>
+      </view>
+      
+      <!-- 数量选择 -->
+      <view class="dish-modal-section">
+        <view class="dish-modal-section-title">数量</view>
+        <view class="dish-modal-quantity">
+          <view class="quantity-btn" bindtap="decreaseQuantity">-</view>
+          <view class="quantity-value">{{selectedQuantity}}</view>
+          <view class="quantity-btn" bindtap="increaseQuantity">+</view>
+        </view>
+      </view>
+      
+      <!-- 添加到购物车按钮 -->
+      <view class="dish-modal-footer">
+        <view class="dish-modal-total">
+          <text class="total-label">合计：</text>
+          <text class="total-price">¥{{totalPrice}}</text>
+        </view>
+        <view class="dish-modal-add-btn" bindtap="addToCart">
+          加入购物车
+        </view>
+      </view>
+    </view>
+  </view>
+  
+  <!-- 购物车遮罩 -->
+  <view class="cart-mask" wx:if="{{showCart}}" bindtap="toggleCart"></view>
+  
+  <!-- 购物车 -->
+  <view class="cart-bar">
+    <!-- 购物车图标 -->
+    <view class="cart-icon-wrapper" bindtap="toggleCart">
+      <view class="cart-icon">
+        <text>🛒</text>
+        <view class="cart-badge" wx:if="{{cartTotalQuantity > 0}}">
+          <text>{{cartTotalQuantity > 99 ? '99+' : cartTotalQuantity}}</text>
+        </view>
+      </view>
+    </view>
+    
+    <!-- 价格和结算 -->
+    <view class="cart-info">
+      <view class="cart-total">
+        <text class="cart-total-label">合计：</text>
+        <text class="cart-total-price">¥{{cartTotalPriceFormatted}}</text>
+      </view>
+      <view class="cart-checkout-btn" bindtap="onCheckout">去结算</view>
+    </view>
+  </view>
+  
+  <!-- 购物车展开列表 -->
+  <view class="cart-list" wx:if="{{showCart}}">
+    <view class="cart-list-header">
+      <text class="cart-list-title">购物车</text>
+      <text class="cart-clear-btn" bindtap="clearCart">清空</text>
+    </view>
+    <scroll-view class="cart-list-content" scroll-y="true">
+      <view class="cart-item" wx:for="{{cart}}" wx:key="id">
+        <image class="cart-item-image" src="{{item.image ? (item.image + '?t=' + currentTimestamp) : ''}}" mode="aspectFill" wx:if="{{item.image}}"></image>
+        <view class="cart-item-info">
+          <view class="cart-item-name">{{item.name}}</view>
+          <view class="cart-item-spec" wx:if="{{item.specification || item.spiciness}}">
+            <text wx:if="{{item.specification}}">{{item.specification}}</text>
+            <text wx:if="{{item.spiciness && item.spiciness !== '不辣'}}"> {{item.spiciness}}</text>
+          </view>
+          <view class="cart-item-bottom">
+            <text class="cart-item-price">¥{{item.priceFormatted}}</text>
+            <view class="cart-item-quantity">
+              <view class="quantity-mini-btn" bindtap="decreaseCartItemQuantity" data-id="{{item.id}}">-</view>
+              <view class="quantity-mini-value">{{item.quantity}}</view>
+              <view class="quantity-mini-btn" bindtap="increaseCartItemQuantity" data-id="{{item.id}}">+</view>
+            </view>
+          </view>
+        </view>
+        <view class="cart-item-delete" bindtap="removeCartItem" data-id="{{item.id}}">
+          <text>×</text>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+  
+  <!-- 营养信息弹窗遮罩 -->
+  <view class="nutrition-modal-mask" wx:if="{{showNutritionModal}}" bindtap="closeNutritionModal"></view>
+  
+  <!-- 营养信息弹窗 -->
+  <view class="nutrition-modal" wx:if="{{showNutritionModal}}">
+    <view class="nutrition-modal-content">
+      <!-- 顶部装饰 -->
+      <view class="nutrition-modal-header">
+        <view class="nutrition-modal-decor"></view>
+      </view>
+      
+      <!-- 关闭按钮 -->
+      <view class="nutrition-modal-close" bindtap="closeNutritionModal">
+        <text>×</text>
+      </view>
+      
+      <!-- 标题区域 -->
+      <view class="nutrition-modal-title-section">
+        <view class="nutrition-modal-icon">🥗</view>
+        <view class="nutrition-modal-title">营养成分分析</view>
+        <view class="nutrition-modal-subtitle">科学饮食，健康生活</view>
+      </view>
+      
+      <!-- 详细营养信息 -->
+      <view class="nutrition-detail-section">
+        <view class="nutrition-detail-header">
+          <view class="nutrition-detail-divider"></view>
+          <text class="nutrition-detail-title">详细数据</text>
+          <view class="nutrition-detail-divider"></view>
+        </view>
+        
+        <scroll-view class="nutrition-detail-scroll" scroll-y="true">
+          <view class="nutrition-detail-grid">
+            <!-- 热量 -->
+            <view class="nutrition-detail-card nutrition-card-calories" wx:if="{{nutritionData.calories}}">
+              <view class="nutrition-card-icon">🔥</view>
+              <view class="nutrition-card-content">
+                <text class="nutrition-card-label">热量</text>
+                <text class="nutrition-card-value">{{nutritionData.calories}} kcal</text>
+              </view>
+            </view>
+            
+            <!-- 蛋白质 -->
+            <view class="nutrition-detail-card nutrition-card-protein" wx:if="{{nutritionData.protein}}">
+              <view class="nutrition-card-icon">💪</view>
+              <view class="nutrition-card-content">
+                <text class="nutrition-card-label">蛋白质</text>
+                <text class="nutrition-card-value">{{nutritionData.protein}} g</text>
+              </view>
+            </view>
+            
+            <!-- 碳水化合物 -->
+            <view class="nutrition-detail-card nutrition-card-carbs" wx:if="{{nutritionData.carbs}}">
+              <view class="nutrition-card-icon">🍚</view>
+              <view class="nutrition-card-content">
+                <text class="nutrition-card-label">碳水化合物</text>
+                <text class="nutrition-card-value">{{nutritionData.carbs}} g</text>
+              </view>
+            </view>
+            
+            <!-- 脂肪 -->
+            <view class="nutrition-detail-card nutrition-card-fat" wx:if="{{nutritionData.fat}}">
+              <view class="nutrition-card-icon">🥑</view>
+              <view class="nutrition-card-content">
+                <text class="nutrition-card-label">脂肪</text>
+                <text class="nutrition-card-value">{{nutritionData.fat}} g</text>
+              </view>
+            </view>
+            
+            <!-- 膳食纤维 -->
+            <view class="nutrition-detail-card nutrition-card-fiber" wx:if="{{nutritionData.fiber}}">
+              <view class="nutrition-card-icon">🥬</view>
+              <view class="nutrition-card-content">
+                <text class="nutrition-card-label">膳食纤维</text>
+                <text class="nutrition-card-value">{{nutritionData.fiber}} g</text>
+              </view>
+            </view>
+            
+            <!-- 维生素A -->
+            <view class="nutrition-detail-card nutrition-card-vitamin" wx:if="{{nutritionData.vitaminA}}">
+              <view class="nutrition-card-icon">🥕</view>
+              <view class="nutrition-card-content">
+                <text class="nutrition-card-label">维生素A</text>
+                <text class="nutrition-card-value">{{nutritionData.vitaminA}} μg</text>
+              </view>
+            </view>
+            
+            <!-- 维生素C -->
+            <view class="nutrition-detail-card nutrition-card-vitamin" wx:if="{{nutritionData.vitaminC}}">
+              <view class="nutrition-card-icon">🍊</view>
+              <view class="nutrition-card-content">
+                <text class="nutrition-card-label">维生素C</text>
+                <text class="nutrition-card-value">{{nutritionData.vitaminC}} mg</text>
+              </view>
+            </view>
+            
+            <!-- 钙 -->
+            <view class="nutrition-detail-card nutrition-card-mineral" wx:if="{{nutritionData.calcium}}">
+              <view class="nutrition-card-icon">🥛</view>
+              <view class="nutrition-card-content">
+                <text class="nutrition-card-label">钙</text>
+                <text class="nutrition-card-value">{{nutritionData.calcium}} mg</text>
+              </view>
+            </view>
+            
+            <!-- 铁 -->
+            <view class="nutrition-detail-card nutrition-card-mineral" wx:if="{{nutritionData.iron}}">
+              <view class="nutrition-card-icon">🥩</view>
+              <view class="nutrition-card-content">
+                <text class="nutrition-card-label">铁</text>
+                <text class="nutrition-card-value">{{nutritionData.iron}} mg</text>
+              </view>
+            </view>
+          </view>
+        </scroll-view>
+        
+        <!-- 注释文字 -->
+        <view class="nutrition-note">
+          <text>注：该营养价值数据仅供参考，真实营养数据请以实际为准</text>
+        </view>
+      </view>
+      
+      <!-- 饼图区域 -->
+      <view class="nutrition-pie-section" wx:if="{{hasNutritionChart}}">
+        <canvas 
+          canvas-id="nutritionPieChart" 
+          class="nutrition-pie-canvas"
+          style="width: 100%; height: 320px;"
+        ></canvas>
+      </view>
+    </view>
+  </view>
+</view>

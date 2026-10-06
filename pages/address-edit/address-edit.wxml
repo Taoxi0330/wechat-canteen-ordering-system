@@ -1,0 +1,62 @@
+<view class="page-container">
+  <!-- 顶部操作栏 -->
+  <view class="header">
+    <view class="back-btn" bindtap="onBack">
+      <text>←</text>
+    </view>
+    <view class="title">{{addressId ? '编辑地址' : '新增地址'}}</view>
+    <view class="placeholder"></view>
+  </view>
+  
+  <!-- 表单区域 -->
+  <view class="form-section">
+    <view class="form-item">
+      <text class="form-label">收货人</text>
+      <input 
+        class="form-input" 
+        placeholder="请输入收货人姓名" 
+        value="{{name}}"
+        bindinput="onNameInput"
+      />
+    </view>
+    
+    <view class="form-item">
+      <text class="form-label">联系电话</text>
+      <input 
+        class="form-input" 
+        placeholder="请输入联系电话" 
+        type="number"
+        maxlength="11"
+        value="{{phone}}"
+        bindinput="onPhoneInput"
+      />
+    </view>
+    
+    <view class="form-item form-item-textarea">
+      <text class="form-label">详细地址</text>
+      <textarea 
+        class="form-textarea" 
+        placeholder="请输入详细地址" 
+        value="{{address}}"
+        bindinput="onAddressInput"
+        maxlength="200"
+      />
+    </view>
+    
+    <view class="form-item form-item-switch">
+      <text class="form-label">设为默认地址</text>
+      <switch 
+        checked="{{isDefault}}" 
+        bindchange="onDefaultChange"
+        color="#409eff"
+      />
+    </view>
+  </view>
+  
+  <!-- 保存按钮 -->
+  <view class="save-section">
+    <view class="save-btn" bindtap="onSave">
+      <text>保存</text>
+    </view>
+  </view>
+</view>

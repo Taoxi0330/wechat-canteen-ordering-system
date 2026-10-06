@@ -1,0 +1,69 @@
+<view class="page-container">
+  <!-- 加载状态 -->
+  <view wx:if="{{loading}}" class="loading-container">
+    <text class="loading-text">加载中...</text>
+  </view>
+
+  <!-- 订单详情 -->
+  <view wx:elif="{{order}}" class="order-detail">
+    <!-- 订单状态 -->
+    <view class="order-status-section">
+      <view class="status-badge {{statusClass[order.status]}}">
+        {{statusText[order.status]}}
+      </view>
+    </view>
+
+    <!-- 取餐码卡片 -->
+    <view class="pickup-card">
+      <view class="pickup-title">取餐码</view>
+      <view class="pickup-code">{{order.pickup_code || '----'}}</view>
+      <view class="pickup-tip">凭此取餐码取餐</view>
+    </view>
+
+    <!-- 订单基本信息 -->
+    <view class="info-section">
+      <view class="section-title">订单信息</view>
+      <view class="info-item">
+        <text class="info-label">商家</text>
+        <text class="info-value">{{order.merchant ? order.merchant.name : '未知商家'}}</text>
+      </view>
+      <view class="info-item">
+        <text class="info-label">订单号</text>
+        <text class="info-value">{{order.id}}</text>
+      </view>
+      <view class="info-item">
+        <text class="info-label">下单时间</text>
+        <text class="info-value">{{formattedOrderTime || order.created_at}}</text>
+      </view>
+      <view class="info-item">
+        <text class="info-label">订单类型</text>
+        <text class="info-value">{{order.order_type === 'takeaway' ? '外卖配送' : '堂食'}}</text>
+      </view>
+      <view class="info-item" wx:if="{{order.reservation_time}}">
+        <text class="info-label">{{order.order_type === 'takeaway' ? '预约送达时间' : '预约取餐时间'}}</text>
+        <text class="info-value">{{formattedReservationTime || order.reservation_time}}</text>
+      </view>
+      <view class="info-item" wx:if="{{order.order_type === 'takeaway' && order.created_at}}">
+        <text class="info-label">预计送达时间</text>
+        <text class="info-value">{{estimatedDeliveryTime}}</text>
+      </view>
+      <view class="info-item" wx:if="{{order.remark}}">
+        <text class="info-label">备注</text>
+        <text class="info-value remark-content">{{order.remark}}</text>
+      </view>
+    </view>
+
+    <!-- 订单金额 -->
+    <view class="price-section">
+      <view class="price-item">
+        <text class="price-label">实付金额</text>
+        <text class="price-value">¥{{order.total_price}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 空状态 -->
+  <view wx:else class="empty-container">
+    <text class="empty-text">订单不存在</text>
+  </view>
+</view>

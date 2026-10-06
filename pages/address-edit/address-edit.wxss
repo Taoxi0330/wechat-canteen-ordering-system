@@ -1,0 +1,98 @@
+/* 地址编辑页面样式 */
+
+.page-container {
+  background: #f5f5f5;
+  min-height: 100vh;
+  padding-bottom: 40rpx;
+}
+
+/* 顶部操作栏 */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20rpx 30rpx;
+  background: #fff;
+  border-bottom: 1rpx solid #e0e0e0;
+}
+
+.back-btn {
+  font-size: 44rpx;
+  color: #333;
+  padding: 10rpx;
+}
+
+.title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.placeholder {
+  width: 60rpx;
+}
+
+/* 表单区域 */
+.form-section {
+  margin-top: 20rpx;
+  background: #fff;
+}
+
+.form-item {
+  display: flex;
+  align-items: center;
+  padding: 30rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.form-item:last-child {
+  border-bottom: none;
+}
+
+.form-item-textarea {
+  align-items: flex-start;
+  flex-direction: column;
+}
+
+.form-item-switch {
+  justify-content: space-between;
+}
+
+.form-label {
+  font-size: 28rpx;
+  color: #333;
+  width: 160rpx;
+  flex-shrink: 0;
+}
+
+.form-input {
+  flex: 1;
+  font-size: 28rpx;
+  color: #333;
+}
+
+.form-textarea {
+  width: 100%;
+  margin-top: 20rpx;
+  padding: 20rpx;
+  background: #f5f5f5;
+  border-radius: 8rpx;
+  font-size: 28rpx;
+  color: #333;
+  min-height: 150rpx;
+}
+
+/* 保存按钮 */
+.save-section {
+  padding: 60rpx 30rpx 0;
+}
+
+.save-btn {
+  background: #409eff;
+  color: #fff;
+  text-align: center;
+  padding: 30rpx;
+  border-radius: 40rpx;
+  font-size: 32rpx;
+  font-weight: bold;
+}

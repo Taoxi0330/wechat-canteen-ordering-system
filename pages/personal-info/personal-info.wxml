@@ -1,0 +1,124 @@
+<view class="page-container">
+  <view class="section">
+    <view class="section-title">个人信息</view>
+    <view class="info-item" bindtap="onEditUsername">
+      <text class="info-label">用户名</text>
+      <view class="info-value">
+        <text>{{userInfo.username}}</text>
+        <text class="action-text">修改</text>
+      </view>
+    </view>
+    <view class="info-item" bindtap="onEditPhone">
+      <text class="info-label">手机号</text>
+      <view class="info-value">
+        <text>{{userInfo.phone || '未绑定'}}</text>
+        <text class="action-text">{{userInfo.phone ? '更换' : '绑定'}}</text>
+      </view>
+    </view>
+    <view class="info-item">
+      <text class="info-label">注册时间</text>
+      <text class="info-value">{{formattedTime}}</text>
+    </view>
+  </view>
+  
+  <view class="section">
+    <view class="section-title">账号安全</view>
+    <view class="info-item" bindtap="onEditPassword">
+      <text class="info-label">登录密码</text>
+      <view class="info-value">
+        <text>••••••••</text>
+        <text class="action-text">修改</text>
+      </view>
+    </view>
+  </view>
+  
+  <!-- 修改昵称弹窗 -->
+  <view class="modal" wx:if="{{showEditUsernameModal}}">
+    <view class="modal-content">
+      <view class="modal-header">
+        <text class="modal-title">修改昵称</text>
+        <text class="modal-close" bindtap="closeEditUsernameModal">×</text>
+      </view>
+      <view class="modal-body">
+        <input 
+          class="modal-input" 
+          placeholder="请输入新昵称" 
+          value="{{newUsername}}" 
+          bindinput="onUsernameInput"
+          maxlength="20"
+        />
+      </view>
+      <view class="modal-footer">
+        <button class="modal-btn cancel" bindtap="closeEditUsernameModal">取消</button>
+        <button class="modal-btn confirm" bindtap="saveUsername">确定</button>
+      </view>
+    </view>
+  </view>
+  
+  <!-- 修改密码弹窗 -->
+  <view class="modal" wx:if="{{showEditPasswordModal}}">
+    <view class="modal-content">
+      <view class="modal-header">
+        <text class="modal-title">修改密码</text>
+        <text class="modal-close" bindtap="closeEditPasswordModal">×</text>
+      </view>
+      <view class="modal-body">
+        <input 
+          class="modal-input" 
+          placeholder="请输入原密码" 
+          value="{{oldPassword}}" 
+          bindinput="onOldPasswordInput"
+          password
+        />
+        <input 
+          class="modal-input" 
+          placeholder="请输入新密码" 
+          value="{{newPassword}}" 
+          bindinput="onNewPasswordInput"
+          password
+        />
+        <input 
+          class="modal-input" 
+          placeholder="请确认新密码" 
+          value="{{confirmPassword}}" 
+          bindinput="onConfirmPasswordInput"
+          password
+        />
+      </view>
+      <view class="modal-footer">
+        <button class="modal-btn cancel" bindtap="closeEditPasswordModal">取消</button>
+        <button class="modal-btn confirm" bindtap="savePassword">确定</button>
+      </view>
+    </view>
+  </view>
+  
+  <!-- 修改手机号弹窗 -->
+  <view class="modal" wx:if="{{showEditPhoneModal}}">
+    <view class="modal-content">
+      <view class="modal-header">
+        <text class="modal-title">{{userInfo.phone ? '更换手机号' : '绑定手机号'}}</text>
+        <text class="modal-close" bindtap="closeEditPhoneModal">×</text>
+      </view>
+      <view class="modal-body">
+        <input 
+          class="modal-input" 
+          placeholder="请输入新手机号" 
+          value="{{newPhone}}" 
+          bindinput="onPhoneInput"
+          maxlength="11"
+        />
+        <input 
+          class="modal-input" 
+          placeholder="请输入密码验证" 
+          value="{{password}}" 
+          bindinput="onPasswordInput"
+          password
+        />
+      </view>
+      <view class="modal-footer">
+        <button class="modal-btn cancel" bindtap="closeEditPhoneModal">取消</button>
+        <button class="modal-btn confirm" bindtap="savePhone">确定</button>
+      </view>
+    </view>
+  </view>
+</view>

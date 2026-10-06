@@ -1,0 +1,100 @@
+<view class="page-container">
+  <!-- 轮播框 -->
+  <view class="banner-container">
+    <swiper 
+      autoplay 
+      interval="3000" 
+      circular 
+      indicator-dots 
+      indicator-active-color="#fff"
+      indicator-color="rgba(255,255,255,0.5)"
+      class="banner-swiper"
+    >
+      <swiper-item>
+        <view class="banner-item">
+          <image src="/images/宫保鸡丁.png" mode="aspectFill" class="banner-image" />
+          <view class="banner-text">宫保鸡丁</view>
+        </view>
+      </swiper-item>
+      <swiper-item>
+        <view class="banner-item">
+          <image src="/images/香辣鱿鱼须.png" mode="aspectFill" class="banner-image" />
+          <view class="banner-text">香辣鱿鱼须</view>
+        </view>
+      </swiper-item>
+      <swiper-item>
+        <view class="banner-item">
+          <image src="/images/新疆大盘鸡.png" mode="aspectFill" class="banner-image" />
+          <view class="banner-text">新疆大盘鸡</view>
+        </view>
+      </swiper-item>
+      <swiper-item>
+        <view class="banner-item">
+          <image src="/images/玉米排骨汤.png" mode="aspectFill" class="banner-image" />
+          <view class="banner-text">玉米排骨汤</view>
+        </view>
+      </swiper-item>
+    </swiper>
+  </view>
+  
+  <!-- 搜索框 -->
+  <view class="search-container">
+    <view class="search-box">
+      <text class="search-icon">🔍</text>
+      <input 
+        class="search-input" 
+        placeholder="搜索菜品或商家" 
+        value="{{searchKeyword}}"
+        bindinput="onSearchInput"
+        bindconfirm="onSearchConfirm"
+      />
+    </view>
+  </view>
+  
+  <!-- 注册登录板块 -->
+  <view class="auth-container" wx:if="{{!userInfo}}">
+    <view class="auth-card">
+      <text class="auth-title">欢迎来到校园食堂</text>
+      <text class="auth-subtitle">登录后享受更多服务</text>
+      <view class="auth-buttons">
+        <view class="auth-btn login-btn" bindtap="onLoginTap">登录</view>
+        <view class="auth-btn register-btn" bindtap="onRegisterTap">注册</view>
+      </view>
+    </view>
+  </view>
+  
+  <!-- 用户信息板块 -->
+  <view class="auth-container" wx:else>
+    <view class="auth-card">
+      <view class="user-info" bindtap="onAvatarTap">
+        <image class="user-avatar" src="{{userInfo.avatar || '/images/banner1.png'}}" mode="aspectFill" />
+        <view class="user-details">
+          <text class="user-name">{{userInfo.username}}</text>
+          <text class="user-phone">{{userInfo.phone || '未绑定手机'}}</text>
+        </view>
+      </view>
+      <view class="auth-buttons">
+        <view class="auth-btn logout-btn" bindtap="onLogoutTap">退出登录</view>
+      </view>
+    </view>
+  </view>
+  
+  <!-- 堂食外卖板块 -->
+  <view class="dining-container">
+    <view class="dining-card eat-in-card" bindtap="onEatInTap">
+      <text class="dining-icon">🍽️</text>
+      <text class="dining-title">堂食</text>
+      <text class="dining-desc">在食堂内用餐</text>
+    </view>
+    <view class="dining-card takeaway-card" bindtap="onTakeawayTap">
+      <text class="dining-icon">🚪</text>
+      <text class="dining-title">外卖</text>
+      <text class="dining-desc">配送到指定地点</text>
+    </view>
+  </view>
+  
+  <view class="home-content">
+    
+    <text class="page-desc">欢迎使用校园食堂订餐系统</text>
+  </view>
+</view>

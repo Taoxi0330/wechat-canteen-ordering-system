@@ -1,0 +1,38 @@
+# 图标占位符文件
+
+由于系统限制，无法直接生成图标文件。请按照以下文件名创建对应的PNG图标：
+
+## TabBar图标（必需）
+- home.png
+- home-active.png  
+- shop.png
+- shop-active.png
+- cart.png
+- cart-active.png
+- order.png
+- order-active.png
+- profile.png
+- profile-active.png
+
+## 装饰图标（可选，用于优化用户体验）
+- default-food.png
+- default-avatar.png
+- empty-cart.png
+- empty-order.png
+- address.png
+- favorite.png
+- coupon.png
+- history.png
+- about.png
+- feedback.png
+- contact.png
+
+图标规格请参考README.md文件。
+
+
+
+
+
+
+
+

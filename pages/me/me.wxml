@@ -1,0 +1,71 @@
+<view class="page-container">
+  <!-- 上半部分：登录板块 -->
+  <view class="login-section">
+    <view class="login-content" wx:if="{{!userInfo}}">
+      <view class="avatar-container">
+        <image src="/images/banner1.png" mode="aspectFill" class="avatar" />
+      </view>
+      <view class="login-info">
+        <text class="login-text" bindtap="onLogin">点击登录</text>
+        <text class="login-desc">登录后享受更多服务</text>
+      </view>
+    </view>
+    <view class="login-content" wx:else>
+      <view class="avatar-container" bindtap="onAvatarTap">
+        <image src="{{userInfo.avatar || '/images/banner1.png'}}" mode="aspectFill" class="avatar" />
+        <view class="avatar-edit-icon">📷</view>
+      </view>
+      <view class="login-info">
+        <text class="user-name">{{userInfo.username}}</text>
+        <text class="user-phone">{{userInfo.phone || '未绑定手机'}}</text>
+      </view>
+      <view class="logout-btn" bindtap="onLogout">退出登录</view>
+    </view>
+  </view>
+  
+  <!-- 下半部分：我的服务 -->
+  <view class="service-section">
+    <view class="section-title">我的服务</view>
+    <view class="service-grid">
+      <view class="service-item" bindtap="onOrderTap">
+        <view class="service-icon">🛒</view>
+        <text class="service-name">我的订单</text>
+      </view>
+      <view class="service-item" bindtap="onFavoriteTap">
+        <view class="service-icon">❤️</view>
+        <text class="service-name">我的收藏</text>
+      </view>
+      <view class="service-item" bindtap="onMyReviewsTap">
+        <view class="service-icon">📝</view>
+        <text class="service-name">我的评价</text>
+      </view>
+      <view class="service-item">
+        <view class="service-icon">🎁</view>
+        <text class="service-name">我的优惠</text>
+      </view>
+    </view>
+  </view>
+  
+  <!-- 下半部分：设置板块 -->
+  <view class="setting-section">
+    <view class="section-title">设置</view>
+    <view class="setting-list">
+        <view class="setting-item" bindtap="onAddressTap">
+        <text class="setting-name">我的地址</text>
+        <text class="setting-arrow">›</text>
+      </view>
+      <view class="setting-item" bindtap="onPersonalInfoTap">
+        <text class="setting-name">个人信息与账号安全</text>
+        <text class="setting-arrow">›</text>
+      </view>
+      <view class="setting-item">
+        <text class="setting-name">隐私设置</text>
+        <text class="setting-arrow">›</text>
+      </view>
+      <view class="setting-item">
+        <text class="setting-name">关于我们</text>
+        <text class="setting-arrow">›</text>
+      </view>
+    </view>
+  </view>
+</view>

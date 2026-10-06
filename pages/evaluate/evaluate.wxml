@@ -1,0 +1,63 @@
+<view class="page-container">
+  <view class="header">
+    <view class="nav-bar">
+      <view class="nav-back" bindtap="goBack">
+        <text class="icon">←</text>
+      </view>
+      <view class="nav-title">评价订单</view>
+    </view>
+  </view>
+
+  <view class="content">
+    <view class="order-info">
+      <view class="order-id">订单号：{{orderId}}</view>
+    </view>
+
+    <view class="dish-list">
+      <view class="dish-item" wx:for="{{orderItems}}" wx:key="id">
+        <view class="dish-info">
+          <image class="dish-image" src="{{item.image ? 'http://192.168.50.250:3000' + item.image : '/images/banner1.png'}}" mode="aspectFill"></image>
+          <view class="dish-detail">
+            <view class="dish-name">{{item.name}}</view>
+            <view class="dish-spec">× {{item.quantity}}</view>
+          </view>
+        </view>
+
+        <view class="review-section">
+          <view class="rating-section">
+            <text class="rating-label">评分：</text>
+            <view class="stars">
+              <view 
+                wx:for="{{[0,1,2,3,4]}}" 
+                wx:key="*this" 
+                wx:for-item="starIndex"
+                class="star {{starStatus[item.id][starIndex] ? 'active' : ''}}"
+                data-dish-id="{{item.id}}"
+                data-rating="{{starIndex + 1}}"
+                bindtap="setRating"
+              >
+                ★
+              </view>
+            </view>
+          </view>
+
+          <view class="content-section">
+            <text class="content-label">评价内容：</text>
+            <textarea 
+              class="review-content" 
+              placeholder="分享您的用餐体验..." 
+              value="{{itemReviews[item.id] && itemReviews[item.id].content || ''}}"
+              data-dish-id="{{item.id}}"
+              bindinput="setContent"
+              maxlength="200"
+            ></textarea>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="submit-section">
+      <button class="submit-btn" bindtap="submitReviews">提交评价</button>
+    </view>
+  </view>
+</view>

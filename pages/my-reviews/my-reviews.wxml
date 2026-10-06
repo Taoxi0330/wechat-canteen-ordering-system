@@ -1,0 +1,67 @@
+<view class="page-container">
+  <view class="header">
+    <view class="nav-bar">
+      <view class="nav-back" bindtap="goBack">
+        <text class="icon">←</text>
+      </view>
+      <view class="nav-title">我的评价</view>
+    </view>
+  </view>
+
+  <view class="content">
+    <view class="reviews-summary" wx:if="{{reviews.length > 0}}">
+      <view class="summary-item">
+        <text class="summary-label">总评价数</text>
+        <text class="summary-value">{{reviews.length}}</text>
+      </view>
+      <view class="summary-item">
+        <text class="summary-label">平均评分</text>
+        <text class="summary-value">{{averageRating}}</text>
+      </view>
+    </view>
+
+    <view class="reviews-list" wx:if="{{reviews.length > 0}}">
+      <view class="review-item" wx:for="{{reviews}}" wx:key="id">
+        <view class="review-header">
+          <image class="dish-image" src="{{item.dish_image ? 'http://192.168.50.250:3000' + item.dish_image : '/images/banner1.png'}}" mode="aspectFill"></image>
+          <view class="review-info">
+            <view class="dish-name">{{item.dish_name || '未知菜品'}}</view>
+            <view class="merchant-name">{{item.merchant_name || '未知商家'}}</view>
+          </view>
+        </view>
+
+        <view class="rating-section">
+          <view class="stars">
+            <view 
+              wx:for="{{[1,2,3,4,5]}}" 
+              wx:key="*this" 
+              wx:for-item="starIndex"
+              class="star {{starIndex <= item.rating ? 'active' : ''}}"
+            >★</view>
+          </view>
+          <text class="rating-text">{{item.rating}}分</text>
+        </view>
+
+        <view class="review-content" wx:if="{{item.content}}">
+          <text>{{item.content}}</text>
+        </view>
+
+        <view class="review-reply" wx:if="{{item.reply}}">
+          <view class="reply-label">商家回复：</view>
+          <view class="reply-content">{{item.reply}}</view>
+          <view class="reply-time" wx:if="{{item.reply_at}}">{{item.reply_at}}</view>
+        </view>
+
+        <view class="review-time">
+          <text>{{item.created_at}}</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="empty-state" wx:if="{{reviews.length === 0}}">
+      <text class="empty-icon">📝</text>
+      <text class="empty-text">暂无评价</text>
+      <text class="empty-desc">快去订单页面评价吧</text>
+    </view>
+  </view>
+</view>

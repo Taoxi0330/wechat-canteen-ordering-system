@@ -1,0 +1,259 @@
+/* 订单页面样式 */
+
+.page-container {
+  background: var(--bg-color);
+  min-height: 100vh;
+}
+
+/* 标签切换 */
+.tab-container {
+  display: flex;
+  background: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.06);
+}
+
+.tab-item {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 28rpx 0;
+  position: relative;
+}
+
+.tab-item.active .tab-text {
+  color: var(--primary-color);
+  font-weight: 600;
+}
+
+.tab-item.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80rpx;
+  height: 6rpx;
+  background: var(--primary-color);
+  border-radius: 3rpx;
+}
+
+.tab-text {
+  font-size: 30rpx;
+  color: var(--text-color);
+  transition: all 0.3s ease;
+}
+
+/* 订单列表 */
+.order-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+  padding: 20rpx;
+}
+
+/* 订单卡片 */
+.order-card {
+  background: #fff;
+  border-radius: 16rpx;
+  overflow: hidden;
+  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.08);
+}
+
+/* 订单头部 */
+.order-header {
+  padding: 24rpx;
+  border-bottom: 1rpx solid var(--border-color);
+}
+
+.merchant-info {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  flex-wrap: wrap;
+}
+
+.merchant-name {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: var(--text-color);
+}
+
+.order-type {
+  padding: 6rpx 16rpx;
+  border-radius: 8rpx;
+  font-size: 22rpx;
+  font-weight: 500;
+}
+
+.order-type.eatIn {
+  background: rgba(64, 158, 255, 0.1);
+  color: var(--primary-color);
+}
+
+.order-type.takeaway {
+  background: rgba(103, 194, 58, 0.1);
+  color: #67c23a;
+}
+
+.order-status {
+  padding: 6rpx 16rpx;
+  border-radius: 8rpx;
+  font-size: 22rpx;
+  font-weight: 500;
+}
+
+.status-pending {
+  background: rgba(230, 162, 60, 0.1);
+  color: #e6a23c;
+}
+
+.status-processing {
+  background: rgba(64, 158, 255, 0.1);
+  color: var(--primary-color);
+}
+
+.status-completed {
+  background: rgba(103, 194, 58, 0.1);
+  color: #67c23a;
+}
+
+/* 订单内容 */
+.order-content {
+  padding: 24rpx;
+}
+
+.dish-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.dish-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.dish-info {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  flex: 1;
+}
+
+.dish-image {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 8rpx;
+  background: #f5f5f5;
+  flex-shrink: 0;
+}
+
+.dish-name {
+  font-size: 28rpx;
+  color: var(--text-color);
+  font-weight: 500;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dish-quantity {
+  font-size: 26rpx;
+  color: var(--text-color-light);
+  flex-shrink: 0;
+}
+
+/* 订单底部 */
+.order-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24rpx;
+  border-top: 1rpx solid var(--border-color);
+  background: #fafafa;
+}
+
+.order-time {
+  font-size: 24rpx;
+  color: var(--text-color-light);
+}
+
+.order-total {
+  display: flex;
+  align-items: baseline;
+  gap: 8rpx;
+}
+
+.total-label {
+  font-size: 26rpx;
+  color: var(--text-color);
+}
+
+.total-price {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #f56c6c;
+}
+
+/* 评价按钮 */
+.order-action {
+  padding: 0 24rpx 24rpx;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.evaluate-btn {
+  padding: 16rpx 40rpx;
+  background: var(--primary-color);
+  color: #fff;
+  border: none;
+  border-radius: 40rpx;
+  font-size: 26rpx;
+  line-height: 1;
+  margin: 0;
+}
+
+.evaluate-btn::after {
+  border: none;
+}
+
+/* 取消订单按钮 */
+.cancel-btn {
+  padding: 16rpx 40rpx;
+  background: #ff6b35;
+  color: #fff;
+  border: none;
+  border-radius: 40rpx;
+  font-size: 26rpx;
+  line-height: 1;
+  margin: 0;
+}
+
+.cancel-btn::after {
+  border: none;
+}
+
+/* 空状态 */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 160rpx 40rpx;
+  color: var(--text-color-lighter);
+}
+
+.empty-icon {
+  font-size: 120rpx;
+  margin-bottom: 30rpx;
+}
+
+.empty-text {
+  font-size: 28rpx;
+}

@@ -1,0 +1,184 @@
+/* 评价页面样式 */
+
+.page-container {
+  background: var(--bg-color);
+  min-height: 100vh;
+}
+
+/* 头部导航 */
+.header {
+  background: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.nav-bar {
+  display: flex;
+  align-items: center;
+  height: 88rpx;
+  padding: 0 30rpx;
+  border-bottom: 1rpx solid var(--border-color);
+}
+
+.nav-back {
+  width: 60rpx;
+  height: 60rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40rpx;
+  color: var(--text-color);
+}
+
+.nav-title {
+  flex: 1;
+  text-align: center;
+  font-size: 32rpx;
+  font-weight: 600;
+  color: var(--text-color);
+  margin-right: 60rpx;
+}
+
+/* 内容区域 */
+.content {
+  padding: 20rpx;
+}
+
+/* 订单信息 */
+.order-info {
+  background: #fff;
+  padding: 30rpx;
+  border-radius: 16rpx;
+  margin-bottom: 20rpx;
+}
+
+.order-id {
+  font-size: 28rpx;
+  color: var(--text-color);
+}
+
+/* 菜品列表 */
+.dish-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.dish-item {
+  background: #fff;
+  padding: 30rpx;
+  border-radius: 16rpx;
+}
+
+/* 菜品信息 */
+.dish-info {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  margin-bottom: 30rpx;
+}
+
+.dish-image {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 8rpx;
+  background: #f5f5f5;
+  flex-shrink: 0;
+}
+
+.dish-detail {
+  flex: 1;
+}
+
+.dish-name {
+  font-size: 28rpx;
+  color: var(--text-color);
+  font-weight: 500;
+  margin-bottom: 8rpx;
+}
+
+.dish-spec {
+  font-size: 24rpx;
+  color: var(--text-color-light);
+}
+
+/* 评价区域 */
+.review-section {
+  border-top: 1rpx solid var(--border-color);
+  padding-top: 30rpx;
+}
+
+/* 评分区域 */
+.rating-section {
+  display: flex;
+  align-items: center;
+  margin-bottom: 30rpx;
+}
+
+.rating-label {
+  font-size: 28rpx;
+  color: var(--text-color);
+  margin-right: 20rpx;
+}
+
+.stars {
+  display: flex;
+  gap: 10rpx;
+}
+
+.star {
+  font-size: 48rpx;
+  color: #ddd;
+  transition: all 0.2s;
+}
+
+.star.active {
+  color: #ffc107;
+}
+
+/* 内容区域 */
+.content-section {
+  margin-bottom: 10rpx;
+}
+
+.content-label {
+  display: block;
+  font-size: 28rpx;
+  color: var(--text-color);
+  margin-bottom: 15rpx;
+}
+
+.review-content {
+  width: 100%;
+  min-height: 160rpx;
+  padding: 20rpx;
+  background: var(--bg-color);
+  border-radius: 8rpx;
+  font-size: 28rpx;
+  line-height: 1.6;
+  color: var(--text-color);
+  box-sizing: border-box;
+}
+
+/* 提交区域 */
+.submit-section {
+  margin-top: 40rpx;
+  padding-bottom: 40rpx;
+}
+
+.submit-btn {
+  width: 100%;
+  height: 88rpx;
+  background: var(--primary-color);
+  color: #fff;
+  border: none;
+  border-radius: 44rpx;
+  font-size: 32rpx;
+  font-weight: 600;
+  line-height: 88rpx;
+}
+
+.submit-btn::after {
+  border: none;
+}

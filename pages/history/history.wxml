@@ -1,0 +1,68 @@
+<view class="page-container">
+  <!-- 标签切换 -->
+  <view class="tab-container">
+    <view class="tab-item {{currentTab === 0 ? 'active' : ''}}" bindtap="switchTab" data-index="0">
+      <text class="tab-text">全部订单</text>
+    </view>
+    <view class="tab-item {{currentTab === 1 ? 'active' : ''}}" bindtap="switchTab" data-index="1">
+      <text class="tab-text">待评价</text>
+    </view>
+  </view>
+
+  <!-- 订单列表 -->
+  <view class="order-list">
+    <view class="order-card" wx:for="{{displayOrders}}" wx:key="id" bindtap="goToOrderDetail" data-id="{{item.id}}">
+      <!-- 订单头部 -->
+      <view class="order-header">
+        <view class="merchant-info">
+          <text class="merchant-name">{{item.merchant.name}}</text>
+          <view class="order-type {{item.order_type}}">
+            <text>{{item.order_type === 'takeaway' ? '外卖配送' : '堂食'}}</text>
+          </view>
+          <view class="order-status status-{{item.status}}">
+            <text>{{item.statusText}}</text>
+          </view>
+        </view>
+      </view>
+      
+      <!-- 订单内容 -->
+      <view class="order-content">
+        <!-- 订单项列表 -->
+        <view class="dish-list">
+          <view class="dish-item" wx:for="{{item.items}}" wx:key="id" wx:for-item="dish">
+            <view class="dish-info">
+              <image class="dish-image" src="{{dish.image ? 'http://192.168.50.250:3000' + dish.image : '/images/banner1.png'}}" mode="aspectFill"></image>
+              <text class="dish-name">{{dish.name}}</text>
+            </view>
+            <view class="dish-quantity">× {{dish.quantity}}</view>
+          </view>
+        </view>
+      </view>
+      
+      <!-- 订单底部 -->
+      <view class="order-footer">
+        <text class="order-time">{{item.created_at}}</text>
+        <view class="order-total">
+          <text class="total-label">实付金额：</text>
+          <text class="total-price">¥{{item.totalPrice}}</text>
+        </view>
+      </view>
+      
+      <!-- 评价按钮（仅待评价订单显示） -->
+      <view class="order-action" wx:if="{{item.status === 'completed'}}">
+        <button class="evaluate-btn" catchtap="goToEvaluate" data-id="{{item.id}}">去评价</button>
+      </view>
+      
+      <!-- 取消订单按钮（仅待处理订单显示） -->
+      <view class="order-action" wx:if="{{item.status === 'pending'}}">
+        <button class="cancel-btn" catchtap="cancelOrder" data-id="{{item.id}}">取消订单</button>
+      </view>
+    </view>
+  </view>
+  
+  <!-- 空状态 -->
+  <view class="empty-state" wx:if="{{displayOrders.length === 0}}">
+    <text class="empty-icon">📦</text>
+    <text class="empty-text">{{currentTab === 1 ? '暂无可评价订单' : '暂无订单'}}</text>
+  </view>
+</view>

@@ -1,0 +1,58 @@
+# Node.js 依赖
+node_modules/
+package-lock.json
+
+# 日志文件
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# 运行时数据
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# 环境变量与敏感配置（包含密码等信息）
+.env
+.env.local
+.env.*.local
+
+# IDE 与编辑器配置
+.idea/
+.vscode/
+*.suo
+*.user
+*.sln.docstates
+
+# 操作系统生成的文件
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# 微信开发者工具相关
+project.private.config.json
+miniprogram_npm/
+
+# 构建输出
+dist/
+build/
+
+# 临时文件
+*.tmp
+*.temp
+*.log
+tmp/
+temp/
+
+# 数据库备份
+*.sql.bak
+*.db
+*.sqlite
+*.sqlite3
